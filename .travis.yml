@@ -1,0 +1,47 @@
+language: android
+dist: trusty
+jdk: oraclejdk8
+branches:
+  only:
+    - mido
+env:
+  - VSTR=16.3 VCODE=1630
+android:
+  components:
+    - build-tools-27.0.3
+    - android-27
+before_script:
+  # Python
+  - curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+  - pyenv install --list
+  - pyenv install 3.5.1
+  - pyenv global 3.5.1
+  # NDK
+  - export TERM=dumb
+  - curl -L http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin -O
+  - chmod u+x android-ndk-r10e-linux-x86_64.bin
+  - ./android-ndk-r10e-linux-x86_64.bin > /dev/null
+  - rm android-ndk-r10e-linux-x86_64.bin
+  - export ANDROID_NDK_HOME=`pwd`/android-ndk-r10e
+  - export ANDROID_NDK="$ANDROID_NDK_HOME"
+  - export LOCAL_ANDROID_NDK_HOME="$ANDROID_NDK_HOME"
+  - export LOCAL_ANDROID_NDK_HOST_PLATFORM="linux-x86_64"
+  - export PATH=$PATH:${ANDROID_NDK_HOME}
+  - env
+script:
+  - python build.py binary ${VSTR} ${VCODE}
+  - mkdir -p out
+  - wget -qO out/app-debug.apk https://github.com/topjohnwu/MagiskManager/releases/download/v5.6.4/MagiskManager-v5.6.4.apk
+  - python build.py zip ${VSTR} ${VCODE}
+  - python build.py uninstaller
+  - python build.py snet
+after_success:
+  - rm -rf .git/
+  - cd out
+  - git init
+  - git config user.name "bot"
+  - git config user.email "bot@github.com"
+  - git add .
+  - TAG="Magisk build ${TRAVIS_BUILD_NUMBER}"
+  - git commit -m "$TAG"
+  - git push --force --quiet "https://${GitHub_Token}@github.com/Jerry981028/Magisk.git" HEAD:out
