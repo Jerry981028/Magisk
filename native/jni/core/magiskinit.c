@@ -502,7 +502,7 @@ int main(int argc, char *argv[]) {
 		}
 
 		// Mount vendor
-		snprintf(partname, sizeof(partname), "vendor%s", cmd.slot);
+		snprintf(partname, sizeof(partname), "cust%s", cmd.slot);
 		if (setup_block(&dev, partname) == 0)
 			xmount(dev.path, "/vendor", "ext4", MS_RDONLY, NULL);
 	}
