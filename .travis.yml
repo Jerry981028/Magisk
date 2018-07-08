@@ -35,7 +35,8 @@ script:
   - wget -qO out/app-debug.apk https://github.com/topjohnwu/MagiskManager/releases/download/v5.8.0/MagiskManager-v5.8.0.apk
   - python build.py zip
   - python build.py uninstaller
-  - python build.py snet
+  # drop snet since it's causing error(rip snet)
+  # python build.py snet
 after_success:
   - rm -rf .git/
   - cd out
