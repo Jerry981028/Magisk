@@ -478,7 +478,7 @@ int main(int argc, char *argv[]) {
 
 		// Mount vendor
 		snprintf(partname, sizeof(partname), "%s%s", vendor, cmd.slot);
-		if (setup_block(&dev, partname) == 0)
+		if (setup_block(&dev, partname) == 0){
 			xmount(dev.path, "/vendor", "ext4", MS_RDONLY, NULL);
 			mounted_vendor = 1;
 		}
