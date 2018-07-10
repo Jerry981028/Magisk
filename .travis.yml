@@ -21,7 +21,10 @@ script:
   # 1
   - sed -i "s/keyStorePass=/keyStorePass=${keyStore_Pass}/g" config.prop
   - sed -i "s/keyPass=/keyPass=${key_Pass}/g" config.prop
-  - python build.py --release all
+  - python build.py --release apk
+  - python build.py --release binary
+  - python build.py --release zip
+  - python build.py --release uninstaller
   - mv out signed
   - python build.py clean
   # 2
@@ -36,6 +39,7 @@ script:
   - wget -qO m.zip https://github.com/topjohnwu/Magisk/releases/download/v16.6/Magisk-v16.6.zip
   - unzip m.zip
   - cp common/magisk.apk ../out/stub-release.apk
+  - popd
   # start build
   - python build.py binary
   - wget -qO out/app-debug.apk https://github.com/topjohnwu/MagiskManager/releases/download/v5.8.0/MagiskManager-v5.8.0.apk
