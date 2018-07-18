@@ -1,3 +1,6 @@
+# This project no longer updates!
+[Magisk/adf95ce3](https://github.com/topjohnwu/Magisk/commit/adf95ce3a06a6c72f1d203f62f45c5fab21afc60)  
+Next version of Magisk has official support for this.
 # Magisk for a few Xiaomi devices(treble)
 [The project is hosted on github](https://github.com/Jerry981028/Magisk)  
 In theory, this should work with all devices, not only for Xiaomi.
